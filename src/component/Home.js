@@ -17,24 +17,30 @@ class Home extends React.Component {
             pages_display:  1,
             items_all: [],
             page_max : 1,
-            page_number : 1,
+//            page_number : 1,
             pagenate_display: 0,
         }
+        this.page = 1
         this.page_one_max = 20
         this.handleClickCategory = this.handleClickCategory.bind(this);
         this.handleClickMenu = this.handleClickMenu.bind(this);
         this.handleClickPagenate = this.handleClickPagenate.bind(this);
+        this.handleClickPagenateP1 = this.handleClickPagenateP1.bind(this);
     }  
     componentDidMount(){
         this.get_items()
     }
     async get_items(){
+        LibPaginate.init();
+        var page_info = LibPaginate.get_page_start(this.page);         
+console.log(page_info)
         var resData = {}
         var items = []
         var self = this
         this.database = firebase.firestore()
         var dbRef = this.database.collection('cms_posts')
-        dbRef = dbRef.orderBy("created_at", "desc")
+        dbRef = dbRef.orderBy("created_at", "desc").limit(page_info.limit)
+        //         dbRef = dbRef.orderBy("created_at", "desc").limit(page_info.limit)
         var querySnapshot = await dbRef.get()
         querySnapshot.forEach(function(doc) {
             var item = doc.data()
@@ -50,18 +56,20 @@ class Home extends React.Component {
         })
         var categories = await LibCmsPosts.get_category_items(firebase)
         resData.category_items = categories
+        items = LibPaginate.get_page_items(items, page_info.start , page_info.limit )
         items = LibCmsPosts.get_post_items(items , categories)
+// console.log( items )
         resData.items = items
         resData.page_items = await LibCmsPosts.get_page_items(firebase)
-// console.log( resData)
-        self.setState({ data: resData })
+        var is_paginate = LibPaginate.is_paging_display(items.length)
+        self.setState({ data: resData, pagenate_display: is_paginate })
     } 
     async get_category(id){
         var items = []
         this.database = await firebase.firestore()
         var querySnapshot = await this.database.collection('cms_posts')
 //        .where("category_id", "==", id )
-        .orderBy("created_at", "desc")
+        .orderBy("created_at", "desc").limit(1000)
         .get()
         querySnapshot.forEach(function(doc) {
             var item = doc.data()
@@ -80,7 +88,8 @@ class Home extends React.Component {
         new_items = LibCmsPosts.get_post_items(new_items , resData.category_items )
         resData.items = new_items
 console.log( resData )
-        this.setState({ data: resData })
+// self.setState({ data: resData, pagenate_display: is_paginate })
+        this.setState({ data: resData , pagenate_display: 0})
     }
     handleClickCategory(id){
         this.get_category(id)
@@ -150,26 +159,29 @@ console.log(id)
             })
         }
     }
+    handleClickPagenateP1(){
+        this.page = 1
+        this.get_items()
+    }    
     handleClickPagenate(){
-        /*
-        var number = this.state.page_number + 1
-        this.setState({ page_number: number })
-        var items  = LibPaginate.get_items(
-            this.state.items_all, number , this.page_one_max 
-        );
-        var new_items = LibPaginate.add_page_items(this.state.data.items, items );  
-        var new_data = this.state.data
-        new_data.items = new_items
-        this.setState({ data: new_data })
-        */
+        var page = this.page
+        this.page = page + 1
+console.log( "page=", this.page )
+        this.get_items()        
     }
     dispPagenate(){
         if(this.state.pagenate_display ===1){
             return(
             <div className="paginate_wrap">
-                <button onClick={this.handleClickPagenate} className="btn btn-lg btn-outline-primary">
-                    次ページを読む
-                </button>
+                <div className="btn-group" role="group" aria-label="Basic example">
+                    <button onClick={this.handleClickPagenateP1} className="btn btn-lg btn-outline-primary">
+                        1st
+                    </button>
+                    <button onClick={this.handleClickPagenate} className="btn btn-lg btn-outline-primary">
+                        >
+                    </button>
+                </div>
+
             </div>
             )
         }
