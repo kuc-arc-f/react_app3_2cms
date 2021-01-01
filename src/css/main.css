@@ -76,6 +76,15 @@ div#div_head {
 .row.conte_b {
   background-color: #757575;
 }
+.footer_box{
+  background-color: #757575; 
+  color:#FFF; 
+  padding : 140px 40px;
+}
+.footer_box a{
+  color: inherit;
+}
+
 /* flex  */
 .flexbox {
   display: flex;

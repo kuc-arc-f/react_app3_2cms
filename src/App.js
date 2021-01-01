@@ -3,6 +3,7 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 
 import Navbar from './component/Layouts/Navbar';
 import Head from './component/Layouts/Head';
+import Foot from './component/Layouts/Foot';
 import About from './component/About';
 import Home from './component/Home';
 import Show from './component/Show';
@@ -23,7 +24,7 @@ class App extends Component {
             <Route path="/show/:id" component={Show} />
             <Route path="/pages/:id" component={Page} />            
             <Route path='/about' component={About}/>
-            
+            <Foot />
           </div>
         </Router>
       </div>
