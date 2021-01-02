@@ -24,7 +24,7 @@ class Test extends Component {
         firebase.auth().signOut().then(function() {
             console.log('#sign-out-OK');
             alert("Complete, Logout")
-            self.props.history.push("/");
+            self.props.history.push("/cms");
         }).catch(function(error) {
             console.log(error);
         })            

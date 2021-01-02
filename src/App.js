@@ -8,6 +8,9 @@ import About from './component/About';
 import Home from './component/Home';
 import Show from './component/Show';
 import Page from './component/Page';
+/* users*/
+import Login from './component/Users/Login';
+import Logout from './component/Users/Logout';
 /*cms*/
 import CmsPostsIndex from './component/Cms/Posts/Index';
 import CmsPostsCreate from './component/Cms/Posts/Create';
@@ -40,6 +43,8 @@ class App extends Component {
             <Route path="/show/:id" component={Show} />
             <Route path="/pages/:id" component={Page} />            
             <Route path='/about' component={About}/>
+            <Route path='/login' component={Login}/>
+            <Route path='/logout' component={Logout}/>            
             <Route path='/cms' component={CmsHome}/>
             <Route path='/cms_posts' component={CmsPostsIndex}/>
             <Route path='/cms_posts_create' component={CmsPostsCreate}/>
