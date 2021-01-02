@@ -1,6 +1,7 @@
 import React from 'react'
 //import { Link } from 'react-router-dom';
 import LibCommon from '../libs/LibCommon';
+import Head from './Layouts/Head';
 import firebase from 'firebase'
 import marked from  'marked'
 
@@ -39,6 +40,8 @@ console.log( item)
     }    
     render(){
         return(
+        <div className="page_wrap">
+            <Head />
             <div className="container mt-2">
                 <div className="page_head_wrap mt-2">
                     <i className="fas fa-home"></i> > {this.state.data.title}
@@ -51,6 +54,7 @@ console.log( item)
                 <div id="post_item"
                 dangerouslySetInnerHTML={{ __html: this.state.data.content }} />
             </div>
+        </div>
         )
     }
 }

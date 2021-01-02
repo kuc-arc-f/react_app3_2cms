@@ -5,6 +5,8 @@ import LibCommon from '../libs/LibCommon';
 import LibPaginate from '../libs/LibPaginate';
 import LibCmsPosts from '../libs/LibCmsPosts';
 import TopPostsRow from './Layouts/TopPostsRow';
+import Head from './Layouts/Head';
+
 import PagesRow from './Layouts/PagesRow';
 import firebase from 'firebase'
 
@@ -188,43 +190,46 @@ console.log( "page=", this.page )
     }
     render(){
         return(
-        <div className="body_main_wrap">
-            <div className="main_title_wrap">
-                <div id="div_img_layer">
-                    <h1>Sample CMS
-                        <br />
-                    </h1>
-                    <p className="sub_title mt-2">sampleキャッチコピーとなります。
-                        <br />
-                    </p>
-                </div>
-            </div>
-            <div id="div_menu_layer">
-                <div className="container">
-                    <div className="menu_icon_wrap ml-4">
-                        <a className="menu_display_btn" onClick={this.handleClickMenu}>
-                            <i className="fas fa-bars"></i>
-                        </a>
+        <div className="home_wrap">
+            <Head />
+            <div className="body_main_wrap">
+                <div className="main_title_wrap">
+                    <div id="div_img_layer">
+                        <h1>Sample CMS
+                            <br />
+                        </h1>
+                        <p className="sub_title mt-2">sampleキャッチコピーとなります。
+                            <br />
+                        </p>
                     </div>
                 </div>
-            </div>
-            <div className="container">
-                <div className="btn_hidden_ara_wrap">
-                    {this.pageDisp()}
-                    {this.categoryDisp() }
-                </div>             
-                <div className="body_wrap">
-                    <div id="post_items_box" className="row conte mt-4 mb-4">
-                        <div className="col-sm-12">
-                            <div id="div_news">
-                                <h2 className="h4_td_title mt-2 mb-2" >Post</h2>
-                            </div>  
-                            {this.tabRow()}
-                            {this.dispPagenate()}                      
+                <div id="div_menu_layer">
+                    <div className="container">
+                        <div className="menu_icon_wrap ml-4">
+                            <a className="menu_display_btn" onClick={this.handleClickMenu}>
+                                <i className="fas fa-bars"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
+                <div className="container">
+                    <div className="btn_hidden_ara_wrap">
+                        {this.pageDisp()}
+                        {this.categoryDisp() }
+                    </div>             
+                    <div className="body_wrap">
+                        <div id="post_items_box" className="row conte mt-4 mb-4">
+                            <div className="col-sm-12">
+                                <div id="div_news">
+                                    <h2 className="h4_td_title mt-2 mb-2" >Post</h2>
+                                </div>  
+                                {this.tabRow()}
+                                {this.dispPagenate()}                      
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
             </div>
         </div>
         )
